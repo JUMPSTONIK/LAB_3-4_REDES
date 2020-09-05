@@ -1,5 +1,8 @@
 import socket
 import threading
+import pickle
+HEADERSIZE = 10
+typeEncode = 'utf-8'
 
 nickname = input("choose a nickname: ")
 
@@ -9,9 +12,9 @@ client.connect(('127.0.0.1', 55555))
 def  recieve():
     while True:
         try:
-            message = client.recv(1024).decode('ascii')
+            message = client.recv(1024).decode(typeEncode)
             if message == 'NICK':
-                client.send(nickname.encode('ascii'))
+                client.send(nickname.encode(typeEncode))
             else:
                 print(message)
         except:
@@ -22,10 +25,22 @@ def  recieve():
 def write():
     while True:
         message = f'{nickname}: {input("")}'
-        client.send(message.encode('ascii'))
+        client.send(message.encode(typeEncode))
 
 recieve_thread = threading.Thread(target=recieve)
 recieve_thread.start()
+
+#con este podemos enviar objetos a otros clientes
+def send_obj(o):
+    obj = pickle.dumps(o)
+    obj = bytes(f"{len(obj):<{HEADERSIZE}}", 'utf-8') + obj
+    s.send(obj)
+
+#con esta funcion podemos recibir objetos que nos manden
+def recv_obj():
+    obj = s.recv(1024)
+    data = pickle.loads(data[HEADER_SIZE:])
+    return obj
 
 write_thread = threading.Thread(target=write)
 write_thread.start()
