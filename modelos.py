@@ -31,7 +31,7 @@ class paquete(object):
     def set_path(self,the_path):
         self.path = the_path
 
-    def get_maxJumps():
+    def get_maxJumps(self):
         return self.maxJumps
 
     def set_maxJumps(self,total_jumps):
