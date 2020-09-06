@@ -45,7 +45,7 @@ def send_directed(mensaje):
     send_message(mensaje,neighborNames.index(pathASeguir[pos]))
 
 def print_message_recieved(mensaje):
-    print("Nodo origen: "+mensaje.get_orgigin())
+    print("Nodo origen: "+mensaje.get_origin())
     print("Nodo destino: "+mensaje.get_goal())
     print("Mensaje: "+mensaje.get_msg())
     print("Nodos pasados: ")
