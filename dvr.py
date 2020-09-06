@@ -1,4 +1,4 @@
-def dvr(graph, source):
+def dvr_algorithm(graph, source):
     distance, predecessor = dict(), dict()
     for node in graph:
         distance[node], predecessor[node] = float('inf'), None
@@ -12,7 +12,7 @@ def dvr(graph, source):
 
     return distance, predecessor
 
-graph = {
+map = {
     'a': {'b': 5, 'i': 3, 'c': 1},
     'b': {'a': 5, 'f': 8},
     'c': {'a': 1, 'd': 4},
@@ -24,7 +24,34 @@ graph = {
     'i': {'a': 3, 'd': 7},
 }
 
-distance, predecessor = dvr(graph, source='h')
+def find_dvr(start,end):
+    #genera el mapa
+    distance, predecessor = dvr_algorithm(graph = map, source=start)
 
-print(distance)
-print(predecessor)
+    route_to_go = []
+
+    #valor y su predecesor
+    key_list = list(predecessor.keys())
+    val_list = list(predecessor.values())
+
+    route_to_go.append(start)
+    flag = True
+    while flag:
+        try:
+            start = (key_list[val_list.index(start)])
+            route_to_go.append(start)
+        except ValueError:
+            route_to_go.pop(-1)
+            predecessor.pop(start)
+            start = route_to_go[-1]
+            key_list = list(predecessor.keys())
+            val_list = list(predecessor.values())
+
+        if start == end:
+            flag = False
+
+
+    return route_to_go
+
+print(find_dvr('h','a'))
+

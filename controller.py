@@ -2,6 +2,8 @@ import socket
 import threading
 import pickle
 import modelos
+from dvr import find_dvr
+
 graph = {'a':{'b': 5, 'c': 1,'i': 3 },
         'b': {'a': 5, 'f': 8},
         'c': {'a': 1, 'd': 4},
@@ -54,7 +56,9 @@ def write():
                     paquete.set_nextNode(start)
                 if algo == 2:
                     #codigo del algoritmo 2 va aqui
-                    print(algo)
+                    paquete.set_path(find_dvr(start,end))
+                    paquete.set_nextNode(start)
+
                 if algo == 3:
                     #codigo del algoritmo 3 va aqui
                     paquete.set_path(dijkstra(graph,start,end))
