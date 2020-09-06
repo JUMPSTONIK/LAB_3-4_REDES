@@ -46,10 +46,6 @@ def receive():
         nicknames.append(nickname)
         clients.append(client)
 
-        print(f'Nickname of the client is {nickname}!')
-        broadcast(f'{nickname} joined the chat!'.encode(typeEncode))
-        client.send('Connected to the server!'.encode(typeEncode))
-
         thread = threading.Thread(target=handle, args=(client,))
         thread.start()
 

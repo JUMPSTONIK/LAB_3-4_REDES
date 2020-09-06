@@ -61,7 +61,7 @@ def  recieve():
             if a == 'NICK':
                 print("Se hizo el envio del nick")
                 client.send(nickname.encode(typeEncode))
-            else:
+            elif a!=None:
                 print("Se recibio un pickle")
                 mensajeReciv=pickle.loads(message[HEADERSIZE:])
                 print("Se decodificó")
