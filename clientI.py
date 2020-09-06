@@ -4,9 +4,10 @@ import pickle
 from modelos import paquete
 import time
 import traceback
+import copy
 
 HEADERSIZE = 10
-typeEncode = 'utf-8'
+typeEncode = 'latin-1'
 neighborNames=["a","d"]
 neighborCosts=[3,7]
 ip=input("Ingrese la dirección para conectarse: ")
@@ -34,7 +35,8 @@ def send_flood(mensaje):
     global neighborCosts
     for i in range(len(neighborNames)):
         if (neighborNames[i] != mensaje.get_sendingNode()):
-            send_message(mensaje,i)
+            a=copy.deepcopy(mensaje)
+            send_message(a,i)
 
 def send_directed(mensaje):
     global neighborCosts
@@ -70,9 +72,9 @@ def  recieve():
                     else:
                         send_directed(mensajeReciv)
                 else:
-                    nodes=mensaje.get_pastNode()
+                    nodes=mensajeReciv.get_pastNode()
                     nodes.append(nickname)
-                    mensaje.set_pastNode(nodes)
+                    mensajeReciv.set_pastNode(nodes)
         except:
             print("an error ocurred!")
             traceback.print_exc()
