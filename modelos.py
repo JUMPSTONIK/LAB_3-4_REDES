@@ -5,10 +5,10 @@ class paquete(object):
         self.msg = mensaje
         self.origin = ori
         self.goal = go
-        self.path = None
-        self.maxJumps = None
-        self.pastNode = None
-        self.jumps = None
+        self.path = []
+        self.maxJumps = 0
+        self.pastNode = []
+        self.jumps = 0
         self.distance = 0
         self.nextNode = None
         self.sendingNode = None
@@ -19,7 +19,7 @@ class paquete(object):
     def get_msg(self):
         return self.msg
 
-    def get_orgigin(self):
+    def get_origin(self):
         return self.origin
 
     def get_goal(self):

@@ -13,7 +13,7 @@ graph = {'a': {'b': 5 ,'c': 1, 'i': 3 },
         'i':{'a': 3,'d': 7}
         }
 HEADERSIZE = 10
-typeEncode = 'utf-8'
+typeEncode = 'latin-1'
 
 nickname = input("choose a nickname: ")
 

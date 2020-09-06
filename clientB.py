@@ -6,7 +6,7 @@ import time
 import traceback
 
 HEADERSIZE = 10
-typeEncode = 'utf-8'
+typeEncode = 'latin-1'
 neighborNames=["a","f"]
 neighborCosts=[5,8]
 ip=input("Ingrese la dirección para conectarse: ")
@@ -54,10 +54,11 @@ def print_message_recieved(mensaje):
     print("Distancia recorrida: "+str(mensaje.get_distance()))
 
 def  recieve():
+    global nickname
     while True:
         try:
             message = client.recv(1024)
-            a=message.decode('ascii')
+            a=message.decode(typeEncode).strip()
             if a == 'NICK':
                 print("Se hizo el envio del nick")
                 client.send(nickname.encode(typeEncode))
@@ -66,7 +67,7 @@ def  recieve():
                 mensajeReciv=pickle.loads(message[HEADERSIZE:])
                 print("Se decodificó")
                 print(mensajeReciv)
-                if (mensajeReciv.get_goal()!=username):
+                if (mensajeReciv.get_goal()!=nickname):
                     if(mensajeReciv.get_algorithm()==1):
                         if (mensajeReciv.get_jumps()<mensajeReciv.get_maxJumps()):
                             send_flood(mensajeReciv)
