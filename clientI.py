@@ -65,7 +65,11 @@ def  recieve():
             elif a!=None:
                 mensajeReciv=pickle.loads(message[HEADERSIZE:])
                 if (mensajeReciv.get_goal()!=nickname):
-                    print_message_recieved(mensajeReciv)
+                    a=copy.deepcopy(mensajeReciv)
+                    nodes=a.get_pastNode()
+                    nodes.append(nickname)
+                    a.set_pastNode(nodes)
+                    print_message_recieved(a)
                     if(mensajeReciv.get_algorithm()==1):
                         if (mensajeReciv.get_jumps()<mensajeReciv.get_maxJumps()):
                             send_flood(mensajeReciv)
@@ -75,6 +79,7 @@ def  recieve():
                     nodes=mensajeReciv.get_pastNode()
                     nodes.append(nickname)
                     mensajeReciv.set_pastNode(nodes)
+                    print_message_recieved(mensajeReciv)
         except:
             print("an error ocurred!")
             traceback.print_exc()
