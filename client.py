@@ -34,13 +34,13 @@ recieve_thread.start()
 def send_obj(o):
     obj = pickle.dumps(o)
     obj = bytes(f"{len(obj):<{HEADERSIZE}}", 'utf-8') + obj
-    s.send(obj)
+    client.send(obj)
 
 #con esta funcion podemos recibir objetos que nos manden
 def recv_obj():
-    obj = s.recv(1024)
-    data = pickle.loads(data[HEADER_SIZE:])
-    return obj
+    obj = client.recv(1024)
+    data = pickle.loads(obj[HEADERSIZE:])
+    return data
 
 write_thread = threading.Thread(target=write)
 write_thread.start()
