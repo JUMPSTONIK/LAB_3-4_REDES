@@ -42,7 +42,7 @@ def send_directed(mensaje):
     global nickname
     pathASeguir = mensaje.get_path()
     pos=pathASeguir.index(nickname)+1
-    send_message(mensaje,pos)
+    send_message(mensaje,neighborNames.index(pathASeguir[pos]))
 
 def print_message_recieved(mensaje):
     print("Nodo origen: "+mensaje.get_orgigin())
