@@ -1,7 +1,17 @@
 import socket
 import threading
 import pickle
-graph = {'a':{'b':10,'c':3},'b':{'c':1,'d':2},'c':{'b':4,'d':8,'e':2},'d':{'e':7},'e':{'d':9}}
+import modelos
+graph = {'a': {'b': 5 ,'c': 1, 'i': 3 },
+        'b':{'a': 5 ,'f': 8 },
+        'c':{'a': 1 ,'d': 4 },
+        'd':{'i': 7,'c': 4,'e': 9, 'f': 3},
+        'e':{'d':9, 'g': 5},
+        'f':{'b': 8,'d': 3,'g': 4, 'h': 3},
+        'g':{'e': 5,'f': 4},
+        'h': {'f': 3},
+        'i':{'a': 3,'d': 7}
+        }
 HEADERSIZE = 10
 typeEncode = 'utf-8'
 
@@ -10,76 +20,10 @@ nickname = input("choose a nickname: ")
 client = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 client.connect(('127.0.0.1', 55555))
 
-class paquete(object):
-
-    def __init__(self, type_alg, mensaje, ori, go):
-        self.algorithm = type_alg
-        self.msg = mensaje
-        self.origin = ori
-        self.goal = go
-        self.path = None
-        self.maxJumps = None
-        self.pastNode = None
-        self.jumps = None
-        self.distance = None
-        self.nextNode = None
-        self.sendingNode = None
-
-    def get_algorithm():
-        return self.algorithm
-
-    def get_msg():
-        return self.msg
-
-    def get_orgigin():
-        return self.origin
-
-    def get_goal():
-        return self.goal
-
-    def get_path():
-        return self.path
-
-    def set_path(the_path):
-        self.path = the_path
-
-    def get_maxJumps():
-        return self.maxJumps
-
-    def set_maxJumps(total_jumps):
-        self.maxJumps = total_jumps
-
-    def get_pastNode():
-        return self.pastNode
-
-    def set_pastNode(pNode):
-        self.pastNode = pNode
-
-    def get_jumps():
-        return self.jumps
-
-    def set_jumps(nJumps):
-        self.jumps = nJumps
-
-    def get_distance():
-        return self.distance
-
-    def set_distance(dist):
-        self.distance = dist
-
-    def get_nextNode():
-        return self.nextNode
-
-    def set_nextNode(nNode):
-        self.nextNode = nNode
-
-    def get_sendingNode():
-        return self.sendingNode
-
-    def set_sendingNode(sNode):
-        self.sendingNode = sNode
-
-
+op_Alg = "Elige el numero de uno de los siguientes algoritmos:\n1. Flooding\n2. Distance vector routing\n3. Link state routing\n "
+mensaj = "Escriba el mensaje que quiera enviar"
+nodoIn = "elija el nodo desde donde se quiere enviar " + str(graph.keys())
+nodoFi = "elija el nodo destino del mensaje " + str(graph.keys())
 def  recieve():
     while True:
         try:
@@ -87,7 +31,8 @@ def  recieve():
             if message == 'NICK':
                 client.send(nickname.encode(typeEncode))
             else:
-                print(message)
+                #print(message)
+                print()
         except:
             print("an error ocurred!")
             client.close()
@@ -95,8 +40,34 @@ def  recieve():
 
 def write():
     while True:
-        message = f'{nickname}: {input("")}'
-        client.send(message.encode(typeEncode))
+        print(op_Alg)
+        algo = int(input())
+        print(mensaj)
+        mens = input()
+        print(nodoIn)
+        start = input()
+        print(nodoFi)
+        end = input()
+        paquete = modelos.paquete(algo,mens,start,end)
+
+        try:
+            if algo>0 and algo<4 and mens != "" and (start == 'a' or start == 'b' or start == 'c' or start == 'd' or start == 'e' or start == 'f' or start == 'g' or start == 'h' or start == 'i') and (end == 'a' or end == 'b' or end == 'c' or end == 'd' or end == 'e' or end == 'f' or end == 'g' or end == 'h' or end == 'i'):
+                if algo == 1:
+                    #codigo del algoritmo 1 va aqui
+                    print(algo)
+                if algo == 2:
+                    #codigo del algoritmo 2 va aqui
+                    print(algo)
+                if algo == 3:
+                    #codigo del algoritmo 3 va aqui
+                    paquete.set_path(dijkstra(graph,start,end))
+                    paquete.set_nextNode(start)
+
+        except:
+            print("Hubo un error. Por favor, ingrese la informacion que le piden como se le es solicitado.")
+
+        #send_obj(paquete)
+
 
 recieve_thread = threading.Thread(target=recieve)
 recieve_thread.start()
