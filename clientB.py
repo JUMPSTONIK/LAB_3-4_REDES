@@ -60,20 +60,20 @@ def  recieve():
             message = client.recv(1024)
             a=message.decode(typeEncode).strip()
             if a == 'NICK':
-                print("Se hizo el envio del nick")
                 client.send(nickname.encode(typeEncode))
             elif a!=None:
-                print("Se recibio un pickle")
                 mensajeReciv=pickle.loads(message[HEADERSIZE:])
-                print("Se decodificó")
-                print(mensajeReciv)
                 if (mensajeReciv.get_goal()!=nickname):
+                    print_message_recieved(mensajeReciv)
                     if(mensajeReciv.get_algorithm()==1):
                         if (mensajeReciv.get_jumps()<mensajeReciv.get_maxJumps()):
                             send_flood(mensajeReciv)
                     else:
                         send_directed(mensajeReciv)
-                print_message_recieved(mensajeReciv)
+                else:
+                    nodes=mensaje.get_pastNode()
+                    nodes.append(nickname)
+                    mensaje.set_pastNode(nodes)
         except:
             print("an error ocurred!")
             traceback.print_exc()
