@@ -2,15 +2,15 @@ import socket
 import threading
 import pickle
 import modelos
-graph = {'a': {'b': 5 ,'c': 1, 'i': 3 },
-        'b':{'a': 5 ,'f': 8 },
-        'c':{'a': 1 ,'d': 4 },
-        'd':{'i': 7,'c': 4,'e': 9, 'f': 3},
-        'e':{'d':9, 'g': 5},
-        'f':{'b': 8,'d': 3,'g': 4, 'h': 3},
-        'g':{'e': 5,'f': 4},
+graph = {'a':{'b': 5, 'c': 1,'i': 3 },
+        'b': {'a': 5, 'f': 8},
+        'c': {'a': 1, 'd': 4},
+        'd': {'i': 7, 'c': 4,'e': 9, 'f': 3},
+        'e': {'d': 9, 'g': 5},
+        'f': {'b': 8, 'd': 3,'g': 4, 'h': 3},
+        'g': {'e': 5, 'f': 4},
         'h': {'f': 3},
-        'i':{'a': 3,'d': 7}
+        'i': {'a': 3, 'd': 7}
         }
 HEADERSIZE = 10
 typeEncode = 'latin-1'
@@ -20,7 +20,7 @@ nickname = input("choose a nickname: ")
 client = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 client.connect(('127.0.0.1', 55555))
 
-op_Alg = "Elige el numero de uno de los siguientes algoritmos:\n1. Flooding\n2. Distance vector routing\n3. Link state routing\n "
+op_Alg = "Elige el numero de uno de los siguientes algoritmos:\n1. Flooding\n2. Distance vector routing\n3. Link state routing "
 mensaj = "Escriba el mensaje que quiera enviar"
 nodoIn = "elija el nodo desde donde se quiere enviar " + str(graph.keys())
 nodoFi = "elija el nodo destino del mensaje " + str(graph.keys())
@@ -30,9 +30,6 @@ def  recieve():
             message = client.recv(1024).decode(typeEncode)
             if message == 'NICK':
                 client.send(nickname.encode(typeEncode))
-            else:
-                #print(message)
-                print()
         except:
             print("an error ocurred!")
             client.close()
