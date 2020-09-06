@@ -2,7 +2,20 @@ import socket
 import threading
 import pickle
 import modelos
+import traceback
 from dvr import find_dvr
+
+def  recieve():
+    while True:
+        try:
+            message = client.recv(1024).decode(typeEncode).strip()
+            if message == 'NICK':
+                client.send(nickname.encode(typeEncode))
+        except:
+            print("an error ocurred!")
+            traceback.print_stack()
+            traceback.print_exc()
+            break
 
 graph = {'a':{'b': 5, 'c': 1,'i': 3 },
         'b': {'a': 5, 'f': 8},
@@ -17,25 +30,18 @@ graph = {'a':{'b': 5, 'c': 1,'i': 3 },
 HEADERSIZE = 10
 typeEncode = 'latin-1'
 
+ip=input("Ingrese la dirección para conectarse: ")
+port=int(input("Ingrese el numero de puerto: "))
 nickname = input("choose a nickname: ")
 
 client = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-client.connect(('127.0.0.1', 55555))
+client.connect((ip, port))
 
 op_Alg = "Elige el numero de uno de los siguientes algoritmos:\n1. Flooding\n2. Distance vector routing\n3. Link state routing "
 mensaj = "Escriba el mensaje que quiera enviar"
 nodoIn = "elija el nodo desde donde se quiere enviar " + str(graph.keys())
 nodoFi = "elija el nodo destino del mensaje " + str(graph.keys())
-def  recieve():
-    while True:
-        try:
-            message = client.recv(1024).decode(typeEncode)
-            if message == 'NICK':
-                client.send(nickname.encode(typeEncode))
-        except:
-            print("an error ocurred!")
-            client.close()
-            break
+
 
 def write():
     while True:
