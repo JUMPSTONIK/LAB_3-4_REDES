@@ -1,6 +1,7 @@
 import socket
 import threading
 import pickle
+import modelos
 graph = {'a': {'b': 5 ,'c': 1, 'i': 3 },
         'b':{'a': 5 ,'f': 8 },
         'c':{'a': 1 ,'d': 4 },
@@ -19,6 +20,10 @@ nickname = input("choose a nickname: ")
 client = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 client.connect(('127.0.0.1', 55555))
 
+op_Alg = "Elige el numero de uno de los siguientes algoritmos:\n1. Flooding\n2. Distance vector routing\n3. Link state routing\n "
+mensaj = "Escriba el mensaje que quiera enviar"
+nodoIn = "elija el nodo desde donde se quiere enviar " + str(graph.keys())
+nodoFi = "elija el nodo destino del mensaje " + str(graph.keys())
 def  recieve():
     while True:
         try:
@@ -26,7 +31,8 @@ def  recieve():
             if message == 'NICK':
                 client.send(nickname.encode(typeEncode))
             else:
-                print(message)
+                #print(message)
+                print()
         except:
             print("an error ocurred!")
             client.close()
@@ -34,8 +40,34 @@ def  recieve():
 
 def write():
     while True:
-        message = f'{nickname}: {input("")}'
-        client.send(message.encode(typeEncode))
+        print(op_Alg)
+        algo = int(input())
+        print(mensaj)
+        mens = input()
+        print(nodoIn)
+        start = input()
+        print(nodoFi)
+        end = input()
+        paquete = modelos.paquete(algo,mens,start,end)
+
+        try:
+            if algo>0 and algo<4 and mens != "" and (start == 'a' or start == 'b' or start == 'c' or start == 'd' or start == 'e' or start == 'f' or start == 'g' or start == 'h' or start == 'i') and (end == 'a' or end == 'b' or end == 'c' or end == 'd' or end == 'e' or end == 'f' or end == 'g' or end == 'h' or end == 'i'):
+                if algo == 1:
+                    #codigo del algoritmo 1 va aqui
+                    print(algo)
+                if algo == 2:
+                    #codigo del algoritmo 2 va aqui
+                    print(algo)
+                if algo == 3:
+                    #codigo del algoritmo 3 va aqui
+                    paquete.set_path(dijkstra(graph,start,end))
+                    paquete.set_nextNode(start)
+
+        except:
+            print("Hubo un error. Por favor, ingrese la informacion que le piden como se le es solicitado.")
+
+        #send_obj(paquete)
+
 
 recieve_thread = threading.Thread(target=recieve)
 recieve_thread.start()

@@ -9,7 +9,7 @@ class paquete(object):
         self.maxJumps = None
         self.pastNode = None
         self.jumps = None
-        self.distance = None
+        self.distance = 0
         self.nextNode = None
         self.sendingNode = None
 
