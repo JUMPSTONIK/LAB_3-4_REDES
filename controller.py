@@ -66,7 +66,7 @@ def write():
         except:
             print("Hubo un error. Por favor, ingrese la informacion que le piden como se le es solicitado.")
 
-        #send_obj(paquete)
+        send_obj(paquete)
 
 
 recieve_thread = threading.Thread(target=recieve)
@@ -110,7 +110,7 @@ def dijkstra(graph,start,goal):
                 predecessor[childNode] = minNode
         #print(jumps)
         unknowNodes.pop(minNode)
-    
+
     currentNode = goal
     while currentNode != start:
         try:
@@ -124,8 +124,6 @@ def dijkstra(graph,start,goal):
         print('And the path is ' + str(path))
         return path
 
- 
-#dijkstra(graph, 'a', 'd')
 
 write_thread = threading.Thread(target=write)
 write_thread.start()

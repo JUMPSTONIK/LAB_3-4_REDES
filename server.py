@@ -1,6 +1,7 @@
 import threading
 import socket
 import pickle
+import modelos
 HEADERSIZE = 10
 typeEncode = 'utf-8'
 
@@ -23,8 +24,8 @@ def broadcast(message):
 def handle(client):
     while True:
         try:
-            message = client.recv(1024)
-            broadcast(message)
+            paquete = recv_obj(client)
+            send_obj(clients[nicknames.index(paquete.get_nextNode())],paquete) 
         except:
             index =  clients.index(client)
             clients.remove(client)
