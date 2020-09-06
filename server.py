@@ -5,7 +5,7 @@ import modelos
 HEADERSIZE = 10
 typeEncode = 'utf-8'
 
-host = '127.0.0.1' #localhost
+host = '0.0.0.0' #localhost
 port = 55555
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
