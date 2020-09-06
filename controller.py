@@ -1,6 +1,7 @@
 import socket
 import threading
 import pickle
+graph = {'a':{'b':10,'c':3},'b':{'c':1,'d':2},'c':{'b':4,'d':8,'e':2},'d':{'e':7},'e':{'d':9}}
 HEADERSIZE = 10
 typeEncode = 'utf-8'
 
@@ -8,6 +9,76 @@ nickname = input("choose a nickname: ")
 
 client = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 client.connect(('127.0.0.1', 55555))
+
+class paquete(object):
+
+    def __init__(self, type_alg, mensaje, ori, go):
+        self.algorithm = type_alg
+        self.msg = mensaje
+        self.origin = ori
+        self.goal = go
+        self.path = None
+        self.maxJumps = None
+        self.pastNode = None
+        self.jumps = None
+        self.distance = None
+        self.nextNode = None
+        self.sendingNode = None
+
+    def get_algorithm():
+        return self.algorithm
+
+    def get_msg():
+        return self.msg
+
+    def get_orgigin():
+        return self.origin
+
+    def get_goal():
+        return self.goal
+
+    def get_path():
+        return self.path
+
+    def set_path(the_path):
+        self.path = the_path
+
+    def get_maxJumps():
+        return self.maxJumps
+
+    def set_maxJumps(total_jumps):
+        self.maxJumps = total_jumps
+
+    def get_pastNode():
+        return self.pastNode
+
+    def set_pastNode(pNode):
+        self.pastNode = pNode
+
+    def get_jumps():
+        return self.jumps
+
+    def set_jumps(nJumps):
+        self.jumps = nJumps
+
+    def get_distance():
+        return self.distance
+
+    def set_distance(dist):
+        self.distance = dist
+
+    def get_nextNode():
+        return self.nextNode
+
+    def set_nextNode(nNode):
+        self.nextNode = nNode
+
+    def get_sendingNode():
+        return self.sendingNode
+
+    def set_sendingNode(sNode):
+        self.sendingNode = sNode
+
 
 def  recieve():
     while True:
@@ -42,8 +113,6 @@ def recv_obj():
     data = pickle.loads(obj[HEADERSIZE:])
     return data
 
-graph = {'a':{'b':10,'c':3},'b':{'c':1,'d':2},'c':{'b':4,'d':8,'e':2},'d':{'e':7},'e':{'d':9}}
- 
 def dijkstra(graph,start,goal):
     shortest_distance = {}
     predecessor = {}
@@ -55,7 +124,7 @@ def dijkstra(graph,start,goal):
     for node in unknowNodes:
         shortest_distance[node] = infinity
     shortest_distance[start] = 0
- 
+
     while unknowNodes:
         minNode = None
         for node in unknowNodes:
