@@ -57,7 +57,7 @@ def  recieve():
     while True:
         try:
             message = client.recv(1024)
-            a=message.decode(typeEncode)
+            a=message.decode('ascii')
             if a == 'NICK':
                 print("Se hizo el envio del nick")
                 client.send(nickname.encode(typeEncode))
