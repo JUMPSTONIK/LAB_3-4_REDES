@@ -20,7 +20,7 @@ nickname = input("choose a nickname: ")
 client = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 client.connect(('127.0.0.1', 55555))
 
-op_Alg = "Elige el numero de uno de los siguientes algoritmos:\n1. Flooding\n2. Distance vector routing\n3. Link state routing\n "
+op_Alg = "Elige el numero de uno de los siguientes algoritmos:\n1. Flooding\n2. Distance vector routing\n3. Link state routing "
 mensaj = "Escriba el mensaje que quiera enviar"
 nodoIn = "elija el nodo desde donde se quiere enviar " + str(graph.keys())
 nodoFi = "elija el nodo destino del mensaje " + str(graph.keys())
