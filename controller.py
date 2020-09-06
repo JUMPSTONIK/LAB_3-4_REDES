@@ -58,7 +58,7 @@ def write():
         try:
             if algo>0 and algo<4 and mens != "" and (start == 'a' or start == 'b' or start == 'c' or start == 'd' or start == 'e' or start == 'f' or start == 'g' or start == 'h' or start == 'i') and (end == 'a' or end == 'b' or end == 'c' or end == 'd' or end == 'e' or end == 'f' or end == 'g' or end == 'h' or end == 'i'):
                 if algo == 1:
-                    paquete.set_maxJumps(9)
+                    paquete.set_maxJumps(int(input("Ingrese la cantidad máxima de saltos.")))
                     paquete.set_nextNode(start)
                 if algo == 2:
                     #codigo del algoritmo 2 va aqui

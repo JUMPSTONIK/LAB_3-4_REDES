@@ -82,7 +82,7 @@ def  recieve():
                     print_message_recieved(mensajeReciv)
         except:
             print("an error ocurred!")
-            traceback.print_exc()
+            traceback.print_stack()
             client.close()
             break
 
